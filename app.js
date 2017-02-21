@@ -69,7 +69,7 @@ app.post('/books', (req, res) => {
 	.then(function(result){
 		var booksWeSeek = []
 		for (var i = 0; i < result.length; i++) {
-			if (result[i].authorfirstname.includes(searching)) {
+			if (result[i].authorfirstname === !undefined && result[i].authorfirstname.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
@@ -78,7 +78,7 @@ app.post('/books', (req, res) => {
 					language: result[i].dataValues.language,
 					lastread: result[i].dataValues.lastread
 				})
-			} else if (result[i].authorlastname.includes(searching)) {
+			} else if (result[i].authorlastname === !undefined && result[i].authorlastname.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
@@ -87,7 +87,7 @@ app.post('/books', (req, res) => {
 					language: result[i].dataValues.language,
 					lastread: result[i].dataValues.lastread
 				})
-			} else if (result[i].title.includes(searching)) {
+			} else if (result[i].title === !undefined && result[i].title.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
@@ -96,7 +96,7 @@ app.post('/books', (req, res) => {
 					language: result[i].dataValues.language,
 					lastread: result[i].dataValues.lastread
 				})
-			} else if (result[i].genre.includes(searching)) {
+			} else if (result[i].genre === !undefined && result[i].genre.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
@@ -105,7 +105,7 @@ app.post('/books', (req, res) => {
 					language: result[i].dataValues.language,
 					lastread: result[i].dataValues.lastread
 				})
-			} else if (result[i].language.includes(searching)) {
+			} else if (result[i].language === !undefined && result[i].language.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
@@ -114,7 +114,7 @@ app.post('/books', (req, res) => {
 					language: result[i].dataValues.language,
 					lastread: result[i].dataValues.lastread
 				})
-			} else if (result[i].lastread.includes(searching)) {
+			} else if (result[i].lastread === !undefined && result[i].lastread.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
