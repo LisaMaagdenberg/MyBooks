@@ -1,0 +1,33 @@
+html
+	head
+		title MyBooks -- Books
+		link(rel='stylesheet', type='text/css', href='../css/style.css')
+		link(href='https://fonts.googleapis.com/css?family=Pangolin', rel='stylesheet')
+	body
+		include ../static/pug/header.pug
+		include ../static/pug/navbar.pug
+
+		div#books-page
+			div#books-table
+				table
+					tr
+						th Number
+						th Author
+						th Title
+						th Genre
+						th Language
+						th Last read
+					each book in allBooks
+						tr
+							td #
+							td #{book.authorlastname}, #{book.authorfirstname}
+							td #{book.title}
+							td #{book.genre}
+							td #{book.language}
+							td #{book.lastread}
+			div#search-books
+				form(action="/books" method="post")
+					input(type="text" name="search")
+					input(type="submit" value="Go")
+
+		include ../static/pug/footer.pug
