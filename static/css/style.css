@@ -234,9 +234,25 @@ tr:nth-child(even) {
 /*login end*/
 
 /*add books*/
-#books-page {
+#add-page {
+	display: flex;
 	margin: 10px 15px 30px 15px;
+	justify-content: space-between;
+}
+
+#add-books {
+	flex: 1;
 	border: 1px solid #99004d;
 	padding: 10px;
+	text-align: center;
 }
+
+#add-wishlist {
+	flex: 1;
+	border: 1px solid #99004d;
+	margin-left: 15px;
+	padding: 10px;
+	text-align: center;
+}
+
 /*add books end*/

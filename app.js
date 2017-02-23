@@ -17,7 +17,7 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 app.use(session({
 	secret: 'oh no i will never guess this secret',
-	resave: true,
+	resave: false,
 	saveUninitialized: false
 }))
 
@@ -55,7 +55,10 @@ app.get('/', (req, res) => {
 		for (var i = 0; i < 5; i++) {
 			fiveBooksArray.push(result[i].dataValues)
 		}
-		const wishHomepage = {fiveBooks: fiveBooksArray}
+		const wishHomepage = {
+			fiveBooks: fiveBooksArray, 
+			user: req.session.user
+		}
 		res.render('index', wishHomepage);
 	})
 });
@@ -79,7 +82,10 @@ app.get('/', (req, res) => {
 app.get('/books', (req, res) => {
 	OwnedBooks.findAll({order: 'authorLastName'})
 	.then(function(result){
-		const allTheBooks = {allBooks: result}
+		const allTheBooks = {
+			allBooks: result,
+			user: req.session.user
+		}
 		res.render('books', allTheBooks);
 	})
 });
@@ -147,7 +153,10 @@ app.post('/books', (req, res) => {
 				})
 			}
 		}
-		const SeekingBooks = {allBooks: booksWeSeek}
+		const SeekingBooks = {
+			allBooks: booksWeSeek, 
+			user: req.session.user
+		}
 		res.render('books', SeekingBooks);
 	})
 })
@@ -156,19 +165,22 @@ app.post('/books', (req, res) => {
 app.get('/wishlist', (req, res) => {
 	Wishlist.findAll({order: 'title'})
 	.then(function(result){
-		const theWholeWishlist = {wishingThis: result}
+		const theWholeWishlist = {
+			wishingThis: result, 
+			user: req.session.user
+		}
 		res.render('wishlist', theWholeWishlist);
 	})
 });
 
 //get about '/about' page
 app.get('/about', (req, res) => {
-	res.render('about');
+	res.render('about', {user: req.session.user});
 });
 
 //get login '/login' page
 app.get('/login', (req, res) => {
-	res.render('login');
+	res.render('login', {user: req.session.user});
 });
 
 app.post('/login', (req, res) => {
@@ -196,14 +208,41 @@ app.post('/login', (req, res) => {
 app.get('/addbooks', (req, res) => {
 	var activeUser = req.session.user;
 	// console.log('user is:' + user)
-	console.log(activeUser)
+	// console.log(activeUser)
 	if (activeUser === undefined) {
 		res.redirect('/login/?message=' + encodeURIComponent("Please log in to add books."));
 	} else {
 		const sendingthis = {user: activeUser}
-		console.log(sendingthis)
+		// console.log(sendingthis)
 		res.render('add', sendingthis);
 	}
+})
+
+app.post('/addbooks', (req, res) => {
+	OwnedBooks.create({
+		authorfirstname: req.body.authorfirstname,
+		authorlastname: req.body.authorlastname,
+		title: req.body.title,
+		genre: req.body.genre,
+		language: req.body.language,
+		lastread: req.body.lastread
+	})
+	.then(function(){
+		res.redirect('/books')
+	})
+})
+
+app.post('/wishlist', (req, res) => {
+	Wishlist.create({
+		title: req.body.titlewish,
+		authorfirstname: req.body.authorfirstnamewish,
+		authorlastname: req.body.authorlastnamewish,
+		language: req.body.languagewish,
+		price: req.body.pricewish
+	})
+	.then(function(){
+		res.redirect('/wishlist')
+	})
 })
 
 app.get('/logout', (req, res) => {
