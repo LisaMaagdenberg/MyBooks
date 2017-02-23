@@ -1,16 +1,19 @@
 html
 	head
 		title MyBooks -- About
-		link(rel='stylesheet', type='text/css', href='../css/style.css')
-		link(href='https://fonts.googleapis.com/css?family=Pangolin', rel='stylesheet')
+		include ../static/pug/head-tags.pug
 	body
 		include ../static/pug/header.pug
 		include ../static/pug/navbar.pug
 
 		div#about-page
 			h1 We love books
-			h2 And we want to share it 
-			p On this website you can check which books we own, which books we want and which books we shared.
-			p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu justo sed ipsum sagittis cursus. Sed tincidunt accumsan egestas. Phasellus nulla risus, dictum vitae diam quis, consectetur rutrum libero. Cras ac mauris massa. Donec bibendum dui nec eros vestibulum hendrerit. Phasellus euismod congue lacinia. Nulla congue quam ut nunc consequat, et faucibus odio venenatis. Cras elementum nunc ut mattis vestibulum. Praesent vel libero vel purus mollis porttitor in sed purus. Vestibulum sit amet ex in lorem suscipit scelerisque quis vitae metus. Etiam feugiat est sit amet dui pretium, sit amet lacinia ipsum suscipit. Fusce lectus enim, cursus sed consequat vel, interdum sed nibh. Phasellus sagittis venenatis sem, eu sagittis purus convallis ac. Phasellus et quam luctus, pellentesque nibh at, aliquam nulla. Vivamus quis laoreet enim.
+			p I am Lisa and I love to read. I decided to make my library accessible to everyone, because I get a lot of questions about the books I have, have read or recommend.
+			p My love for book all started at a very young age. My mother works at a library, so as a child I had access to a lot of books. I grew up with all these fantastic worlds right there for me to explore!
+			p 
+				| People ask me very often 
+				strong which genre I like the most
+				| , but that differs a lot. Some periods of time I am really into Young Adult/fantasy, but other times I read a lot of thrillers. During the summer I like chicklits more. Luckily, this also means that I have a lot of different genres available for my friends and family! 
+
 
 		include ../static/pug/footer.pug

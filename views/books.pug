@@ -1,8 +1,7 @@
 html
 	head
 		title MyBooks -- Books
-		link(rel='stylesheet', type='text/css', href='../css/style.css')
-		link(href='https://fonts.googleapis.com/css?family=Pangolin', rel='stylesheet')
+		include ../static/pug/head-tags.pug
 	body
 		include ../static/pug/header.pug
 		include ../static/pug/navbar.pug
@@ -11,7 +10,6 @@ html
 			div#books-table
 				table
 					tr
-						th Number
 						th Author
 						th Title
 						th Genre
@@ -19,7 +17,6 @@ html
 						th Last read
 					each book in allBooks
 						tr
-							td #
 							td #{book.authorlastname}, #{book.authorfirstname}
 							td #{book.title}
 							td #{book.genre}
@@ -29,5 +26,6 @@ html
 				form(action="/books" method="post")
 					input(type="text" name="search")
 					input(type="submit" value="Go")
+				p We found #{allBooks.length} books!
 
 		include ../static/pug/footer.pug

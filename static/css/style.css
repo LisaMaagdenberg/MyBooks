@@ -55,7 +55,7 @@ li {
 
 }
 
-.nav-about {
+.nav-right {
 	float: right;
 }
 
@@ -97,7 +97,7 @@ li a:visited {
 /*footer end*/
 
 /*home*/
-#home-container {
+#container {
 	display: flex;
 	margin: 10px 15px 30px 15px;
 	justify-content: space-between;
@@ -109,11 +109,33 @@ li a:visited {
 	padding: 10px;
 }
 
+#p-home {
+	font-family: 'JennaSue', cursive;
+	font-size: 30px;
+	text-align: right;
+}
+
 #home-right {
 	flex: 3;
 	border: 1px solid #99004d;
 	margin-left: 15px;
 	padding: 10px;
+}
+
+#link {
+	text-align: right;
+	padding: 5px 10px;
+}
+
+#link a {
+	text-decoration: none;
+	color: black;
+	font-size: 30px;
+}
+
+#link a:visited {
+	text-decoration: none;
+	color: black;
 }
 /*home end*/
 
@@ -121,22 +143,16 @@ li a:visited {
 #about-page {
 	margin: 10px 15px 30px 15px;
 	border: 1px solid #99004d;
-	padding: 10px;
+	padding: 10px 50px;
 }
 
 #about-page h1 {
-	font-size: 50px;
+	font-size: 60px;
 	color: #99004d;
 	text-align: center;
 	text-shadow: 1px 1px #242424;
 }
 
-#about-page h2 {
-	font-size: 40px;
-	color: #99004d;
-	text-align: center;
-	text-shadow: 1px 1px #242424;
-}
 /*about end*/
 
 /*books page*/
@@ -180,3 +196,47 @@ tr:nth-child(even) {
 	padding: 10px;
 }
 /*wishlist end*/
+
+/*login*/
+#login-container {
+	display: flex;
+	margin: 10px 15px 30px 15px;
+	justify-content: space-between;
+}
+
+#login-left {
+	flex: 1;
+	border: 1px solid #99004d;
+	padding: 10px;
+	text-align: center;
+}
+
+#login-right {
+	flex: 1;
+	border: 1px solid #99004d;
+	margin-left: 15px;
+	padding: 10px;
+	text-align: center;
+}
+
+.input-button {
+	background-color: #99004d;
+	border: none;
+	border-radius: 2px;
+	color: #cccccc;
+	display: inline-block;
+	margin: 10px;
+	padding: 10px;
+	font-size: 25px;
+	font-family: 'JennaSue', cursive;
+	width: 75px;
+}
+/*login end*/
+
+/*add books*/
+#books-page {
+	margin: 10px 15px 30px 15px;
+	border: 1px solid #99004d;
+	padding: 10px;
+}
+/*add books end*/

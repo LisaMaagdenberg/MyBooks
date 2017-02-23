@@ -1,0 +1,29 @@
+html
+	head
+		title MyBooks -- Login
+		include ../static/pug/head-tags.pug
+	body
+		include ../static/pug/header.pug
+		include ../static/pug/navbar.pug
+		div#login-container
+			#login-left
+				h1 Log in
+				form(action="/login" method="post")
+					p Username:
+					input(type="text" name="username") 
+					p Password:
+					input(type="password" name="password")
+					br
+					input(type="submit" value="Log in" class="input-button")
+			//- #login-right
+			//- 	h1 Sign up
+			//- 	form(action="/" method="post")
+			//- 		p Username:
+			//- 		input(type="text" name="username-signup") 
+			//- 		p E-mail adress:
+			//- 		input(type="text" name="email-signup")
+			//- 		p Password:
+			//- 		input(type="password" name="password-signup") 
+			//- 		br
+			//- 		input(type="submit" value="Sign up!" class="input-button")
+		include ../static/pug/footer.pug

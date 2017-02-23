@@ -6,8 +6,5 @@ html
 	body
 		include ../static/pug/header.pug
 		include ../static/pug/navbar.pug
-		if user
-			#add-page
-				form(action="/addbooks" method="post")
-		p #{user.username}
+
 		include ../static/pug/footer.pug

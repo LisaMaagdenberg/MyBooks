@@ -1,10 +1,28 @@
-div.navbar
-	ul
-		li 
-			a(href="/") Home
-		li 
-			a(href="/books") Books
-		li 
-			a(href="/wishlist") Wishlist
-		li.nav-about 
-			a(href="/about") About
+if user
+	div.navbar
+		ul
+			li 
+				a(href="/") Home
+			li 
+				a(href="/books") Books
+			li 
+				a(href="/wishlist") Wishlist
+			li
+				a(href="/addbooks") Add books
+			li.nav-right 
+				a(href="/logout") Log out
+			li.nav-right
+				a(href="/about") About
+else
+	div.navbar
+		ul
+			li 
+				a(href="/") Home
+			li 
+				a(href="/books") Books
+			li 
+				a(href="/wishlist") Wishlist
+			li.nav-right 
+				a(href="/login") Log in
+			li.nav-right
+				a(href="/about") About

@@ -6,12 +6,20 @@ const connectionString = 'postgres://' +
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize(connectionString)
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
 
 app.use(express.static('static'));
+app.use(express.static('static/js'));
 app.use(bodyParser.urlencoded({extended: true}));  
 app.use(bodyParser.json());
 app.set('views', './views');
 app.set('view engine', 'pug');
+app.use(session({
+	secret: 'oh no i will never guess this secret',
+	resave: true,
+	saveUninitialized: false
+}))
 
 //set table ownedBooks
 var OwnedBooks = sequelize.define('ownedbooks', {
@@ -32,9 +40,24 @@ var Wishlist = sequelize.define('wishlist', {
 	price: Sequelize.STRING
 })
 
+//set table users
+var Users = sequelize.define('users', {
+	username: Sequelize.STRING,
+	email: Sequelize.STRING,
+	password: Sequelize.STRING
+})
+
 //get home '/' page
 app.get('/', (req, res) => {
-	res.render('index');
+	Wishlist.findAll({order: 'title'})
+	.then(function(result){
+		fiveBooksArray = []
+		for (var i = 0; i < 5; i++) {
+			fiveBooksArray.push(result[i].dataValues)
+		}
+		const wishHomepage = {fiveBooks: fiveBooksArray}
+		res.render('index', wishHomepage);
+	})
 });
 
 // for testing: makes a new row
@@ -56,7 +79,6 @@ app.get('/', (req, res) => {
 app.get('/books', (req, res) => {
 	OwnedBooks.findAll({order: 'authorLastName'})
 	.then(function(result){
-		// console.log(booksWeHave)
 		const allTheBooks = {allBooks: result}
 		res.render('books', allTheBooks);
 	})
@@ -69,7 +91,7 @@ app.post('/books', (req, res) => {
 	.then(function(result){
 		var booksWeSeek = []
 		for (var i = 0; i < result.length; i++) {
-			if (result[i].authorfirstname === !undefined && result[i].authorfirstname.includes(searching)) {
+			if (result[i].authorfirstname !== null && result[i].authorfirstname.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
@@ -78,7 +100,7 @@ app.post('/books', (req, res) => {
 					language: result[i].dataValues.language,
 					lastread: result[i].dataValues.lastread
 				})
-			} else if (result[i].authorlastname === !undefined && result[i].authorlastname.includes(searching)) {
+			} else if (result[i].authorlastname !== null && result[i].authorlastname.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
@@ -87,7 +109,7 @@ app.post('/books', (req, res) => {
 					language: result[i].dataValues.language,
 					lastread: result[i].dataValues.lastread
 				})
-			} else if (result[i].title === !undefined && result[i].title.includes(searching)) {
+			} else if (result[i].title !== null && result[i].title.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
@@ -96,7 +118,7 @@ app.post('/books', (req, res) => {
 					language: result[i].dataValues.language,
 					lastread: result[i].dataValues.lastread
 				})
-			} else if (result[i].genre === !undefined && result[i].genre.includes(searching)) {
+			} else if (result[i].genre !== null && result[i].genre.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
@@ -105,7 +127,7 @@ app.post('/books', (req, res) => {
 					language: result[i].dataValues.language,
 					lastread: result[i].dataValues.lastread
 				})
-			} else if (result[i].language === !undefined && result[i].language.includes(searching)) {
+			} else if (result[i].language !== null && result[i].language.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
@@ -114,7 +136,7 @@ app.post('/books', (req, res) => {
 					language: result[i].dataValues.language,
 					lastread: result[i].dataValues.lastread
 				})
-			} else if (result[i].lastread === !undefined && result[i].lastread.includes(searching)) {
+			} else if (result[i].lastread !== null && result[i].lastread.includes(searching)) {
 				booksWeSeek.push({
 					authorfirstname: result[i].dataValues.authorfirstname,
 					authorlastname: result[i].dataValues.authorlastname,
@@ -143,6 +165,55 @@ app.get('/wishlist', (req, res) => {
 app.get('/about', (req, res) => {
 	res.render('about');
 });
+
+//get login '/login' page
+app.get('/login', (req, res) => {
+	res.render('login');
+});
+
+app.post('/login', (req, res) => {
+	if (req.body.username.length === 0){
+		res.redirect('/login/?message=' + encodeURIComponent("Please fill out your username."))
+	}
+	if (req.body.password.length === 0){
+		res.redirect('/login/?message=' + encodeURIComponent("Please fill out your password."))
+	}
+
+	Users.findOne({
+		where: {
+			username: req.body.username
+		}
+	}).then(function(user){
+		if(req.body.password === user.password) {
+			req.session.user = user;
+			res.redirect('/addbooks')
+		} else {
+			res.redirect('/login/?message=' + encodeURIComponent("Invalid username or password."))
+		}
+	})
+})
+
+app.get('/addbooks', (req, res) => {
+	var activeUser = req.session.user;
+	// console.log('user is:' + user)
+	console.log(activeUser)
+	if (activeUser === undefined) {
+		res.redirect('/login/?message=' + encodeURIComponent("Please log in to add books."));
+	} else {
+		const sendingthis = {user: activeUser}
+		console.log(sendingthis)
+		res.render('add', sendingthis);
+	}
+})
+
+app.get('/logout', (req, res) => {
+	req.session.destroy(function(error){
+		if (error){
+			throw error;
+		}
+		res.redirect('/');
+	})
+})
 
 //server
 sequelize.sync()
