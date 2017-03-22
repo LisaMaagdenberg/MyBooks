@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const connectionString = process.env.DATABASE_URL;
+let connectionString = process.env.DATABASE_URL;
 if(!process.env.DATABASE_URL) {
 	connectionString = 'postgres://' + 
 	process.env.POSTGRES_USER + ':' + 
