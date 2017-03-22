@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
-const connectionString = 'postgres://' + 
+const connectionString = process.env.DATABASE_URL;
+if(!process.env.DATABASE_URL) {
+	connectionString = 'postgres://' + 
 	process.env.POSTGRES_USER + ':' + 
 	process.env.POSTGRES_PASSWORD + '@localhost/mybooks';
+}
+
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize(connectionString)
 const bodyParser = require('body-parser');
