@@ -251,7 +251,7 @@ app.get('/logout', (req, res) => {
 //server
 sequelize.sync()
 	.then(function(){
-		app.listen(3000, () => {
+		app.listen(8000, () => {
 			console.log('server has started');
 		});
 	})
