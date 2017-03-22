@@ -1,0 +1,32 @@
+html
+	head
+		title MyBooks -- Change something
+		include ../static/pug/head-tags.pug
+
+	body
+		include ../static/pug/header.pug
+		include ../static/pug/navbar.pug
+		if user
+			#add-page
+				#add-books
+					h1 Change something
+					form(action="/addbooks" method="post")
+						p Author:
+						label(for="firstname") First name
+						br
+						input#firstname(type="text" name="authorfirstname" value=result.authorfirstname)
+						br
+						label(for="lastname") Last name
+						br
+						input#lastname(type="text" name="authorlastname") 
+						p Title:
+						input(type="text" name="title")
+						p Genre:
+						input(type="text" name="genre")
+						p Language:
+						input(type="text" name="language")
+						p Last read:
+						input(type="text" name="lastread")
+						br
+						input(type="submit" value="Add" class="input-button")
+		include ../static/pug/footer.pug

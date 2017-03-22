@@ -15,7 +15,11 @@ html
 					th Price
 				each book in wishingThis
 					tr
-						td #{book.title}
+						if user
+							td
+								a(href="/wishlist_to_books/"+book.id) #{book.title}
+						else	
+							td #{book.title}
 						td #{book.authorfirstname} #{book.authorlastname}
 						td #{book.language}
 						td #{book.price}

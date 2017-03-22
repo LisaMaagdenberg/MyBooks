@@ -27,7 +27,7 @@ p {
 
 #h1-header {
 	text-align: center;
-	color: #99004d;
+	color: #00cccc;
 	text-shadow: 1px 1px #242424;
 	font-size: 100px;
 	padding-top: 15px;
@@ -43,11 +43,11 @@ p {
 ul {
 	display: block;
 	list-style-type: none;
-	background-color: #cccccc;
+	background-color: #e8e8e8;
 	padding: 0px;
 	margin: 0px;
 	overflow: hidden;
-	border: 1px solid #99004d;
+	border: 2px solid #00cccc;
 }
 
 li {
@@ -65,16 +65,16 @@ li a {
 	text-decoration: none;
 	text-align: center;
 	font-size: 35px;
-	color:black;
+	color:#ff9900;
 }
 
 li a:hover {
-	background-color: #a6a6a6;
+	background-color: #b3b3b3;
 }
 
 li a:visited {
 	text-decoration: none;
-	color: black;
+	color: #ff9900;
 }
 /*navbar end*/
 
@@ -105,8 +105,9 @@ li a:visited {
 
 #home-left {
 	flex: 5;
-	border: 1px solid #99004d;
+	border: 3px solid #00e6e6;
 	padding: 10px;
+	border-radius: 15px;
 }
 
 #p-home {
@@ -117,9 +118,10 @@ li a:visited {
 
 #home-right {
 	flex: 3;
-	border: 1px solid #99004d;
+	border: 3px solid #00e6e6;
 	margin-left: 15px;
 	padding: 10px;
+	border-radius: 15px;
 }
 
 #link {
@@ -142,13 +144,14 @@ li a:visited {
 /*about*/
 #about-page {
 	margin: 10px 15px 30px 15px;
-	border: 1px solid #99004d;
+	border: 3px solid #00e6e6;
 	padding: 10px 50px;
+	border-radius: 15px;
 }
 
 #about-page h1 {
 	font-size: 60px;
-	color: #99004d;
+	color: #66cc00;
 	text-align: center;
 	text-shadow: 1px 1px #242424;
 }
@@ -158,9 +161,10 @@ li a:visited {
 /*books page*/
 #books-page {
 	margin: 10px 15px 30px 15px;
-	border: 1px solid #99004d;
+	border: 3px solid #00e6e6;
 	padding: 10px;
 	display:flex;
+	border-radius: 15px;
 }
 
 table {
@@ -176,7 +180,7 @@ td, th {
 }
 
 tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #ccff99;
 }
 
 #books-table {
@@ -187,13 +191,27 @@ tr:nth-child(even) {
 	flex: 1;
 	margin-left: 15px;
 }
+
+form {
+	font-family: arial;
+}
+
+form p {
+	margin-bottom: 2px;
+	font-size: 15px;
+}
+
+#searchOptions {
+	padding-left: 15px;
+}
 /*books end*/
 
 /*wishlist*/
 #wishlist-table {
 	margin: 10px 15px 30px 15px;
-	border: 1px solid #99004d;
+	border: 3px solid #00e6e6;
 	padding: 10px;
+	border-radius: 15px;
 }
 /*wishlist end*/
 
@@ -206,24 +224,26 @@ tr:nth-child(even) {
 
 #login-left {
 	flex: 1;
-	border: 1px solid #99004d;
+	border: 3px solid #00e6e6;
 	padding: 10px;
 	text-align: center;
+	border-radius: 15px;
 }
 
 #login-right {
 	flex: 1;
-	border: 1px solid #99004d;
+	border: 3px solid #00e6e6;
 	margin-left: 15px;
 	padding: 10px;
 	text-align: center;
+	border-radius: 15px;
 }
 
 .input-button {
-	background-color: #99004d;
+	background-color: #b3ff66;
 	border: none;
 	border-radius: 2px;
-	color: #cccccc;
+	color: #262626;
 	display: inline-block;
 	margin: 10px;
 	padding: 10px;
@@ -232,7 +252,18 @@ tr:nth-child(even) {
 	width: 75px;
 }
 /*login end*/
-
+.button {
+	background-color: #b3ff66;
+	border: none;
+	border-radius: 2px;
+	color: #262626;
+	display: inline-block;
+	margin: 10px;
+	padding: 10px;
+	font-size: 25px;
+	font-family: 'JennaSue', cursive;
+	width: 75px;
+}
 /*add books*/
 #add-page {
 	display: flex;
@@ -240,19 +271,25 @@ tr:nth-child(even) {
 	justify-content: space-between;
 }
 
+h1 {
+	color: #66cc00;
+}
+
 #add-books {
 	flex: 1;
-	border: 1px solid #99004d;
+	border: 3px solid #00e6e6;
 	padding: 10px;
 	text-align: center;
+	border-radius: 15px;
 }
 
 #add-wishlist {
 	flex: 1;
-	border: 1px solid #99004d;
+	border: 3px solid #00e6e6;
 	margin-left: 15px;
 	padding: 10px;
 	text-align: center;
+	border-radius: 15px;
 }
 
 /*add books end*/

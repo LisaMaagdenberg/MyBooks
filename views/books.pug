@@ -6,8 +6,8 @@ html
 		include ../static/pug/header.pug
 		include ../static/pug/navbar.pug
 
-		div#books-page
-			div#books-table
+		#books-page
+			#books-table
 				table
 					tr
 						th Author
@@ -16,16 +16,124 @@ html
 						th Language
 						th Last read
 					each book in allBooks
-						tr
+						tr.initialResult
 							td #{book.authorlastname}, #{book.authorfirstname}
-							td #{book.title}
+							td 
+								a(href="/book/"+book.id) #{book.title}
 							td #{book.genre}
 							td #{book.language}
 							td #{book.lastread}
-			div#search-books
+			#search-books
+				h1 Search options
 				form(action="/books" method="post")
-					input(type="text" name="search")
-					input(type="submit" value="Go")
-				p We found #{allBooks.length} books!
+					p By title, author:
+					input(type="text" name="search" id="searchbar")
+					br
+					p By language:
+					input(type='radio', name='language', value='Dutch/English' checked)
+					|  Both
+					br
+					input(type='radio', name='language', value='Dutch')
+					|  Dutch
+					br
+					input(type='radio', name='language', value='English')
+					|  English
+					br
+					p Genres:
+					input(type='radio', name='allGenres', value='all' checked) 
+					|  All
+					br
+					input(type='radio', name='allGenres', value='no')
+					|  Select by genre:
+					br
+					div#searchOptions
+						input(type="radio", name="genre", value="null")
+						|  Not specified
+						br
+						input(type='radio', name='genre', value='fantasy')
+						|  Fantasy
+						br
+						input(type='radio', name='genre', value='thriller')
+						|  Thriller
+						br
+						input(type='radio', name='genre', value='romance')
+						|  Romance
+						br
+						input(type='radio', name='genre', value='chicklit')
+						|  Chicklit
+						br
+						input(type='radio', name='genre', value='children\'s')
+						|  Children's
+						br
+						input(type='radio', name='genre', value='religion')
+						|  Religion
+						br
+						input(type='radio', name='genre', value='Judaïsm')
+						|  Judaïsm
+						br
+						input(type='radio', name='genre', value='YA')
+						|  Young Adult
+						br
+						input(type='radio', name='genre', value='novel')
+						|  Novel
+						br
+						input(type='radio', name='genre', value='real life')
+						|  Real life
+						br
+						input(type='radio', name='genre', value='war')
+						|  War
+						br
+						input(type='radio', name='genre', value='detective')
+						|  Detective
+					br
+					br
+					input(class="button" type="submit" value="Go")
+				p#howMany We found #{allBooks.length} books!
 
 		include ../static/pug/footer.pug
+		script.
+			$(".button").click(function(event){
+				event.preventDefault()
+				var thisLanguage = ""
+				var thisAllGenre = ""
+				var thisGenre = ""
+				for (var i = 0; i <= 2; i++) {
+					if (document.getElementsByName('language')[i].checked) {
+						thisLanguage = document.getElementsByName('language')[i].value
+					}
+				}
+				if (document.getElementsByName('allGenres')[0].checked) {
+					thisAllGenre = document.getElementsByName('allGenres')[0].value
+				} else {
+					thisAllGenre = document.getElementsByName('allGenres')[1].value
+					for (var i = 0; i <= 12; i++) {
+						if (document.getElementsByName('genre')[i].checked) {
+							thisGenre = document.getElementsByName('genre')[i].value
+						}
+					}
+				}
+				
+				var data = {
+					search: document.getElementById('searchbar').value,
+					language: thisLanguage,
+					allGenres: thisAllGenre,
+					genre: thisGenre
+				}
+				//- console.log('this is the data')
+				//- console.log(data)
+				$.post('/books', data, function(res, status){
+					console.log('this is the result')
+					console.log(res)
+					$(".initialResult").remove()
+					for (var i = 0; i < res.allBooks.length; i++) {
+						console.log(res.allBooks[0].id)
+						$("table").append("<tr class='initialResult'>" +
+							"<td>" + res.allBooks[i].authorlastname+", "+res.allBooks[i].authorfirstname+"</td>" +
+							"<td><a href='/book/"+res.allBooks[i].id+"'>" + res.allBooks[i].title+"</a></td>" +
+							"<td>" + res.allBooks[i].genre+"</td>" +
+							"<td>" + res.allBooks[i].language+"</td>" +
+							"<td>" + res.allBooks[i].lastread+"</td></tr>")
+					}
+					$("#howMany").html("We found " + res.allBooks.length + " books!")
+				})
+			})

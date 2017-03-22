@@ -28,7 +28,7 @@ var OwnedBooks = sequelize.define('ownedbooks', {
 	title: Sequelize.STRING,
 	genre: Sequelize.STRING,
 	language: Sequelize.STRING,
-	lastread: Sequelize.STRING
+	lastread: Sequelize.STRING,
 });
 
 //set table wishlist
@@ -49,14 +49,10 @@ var Users = sequelize.define('users', {
 
 //get home '/' page
 app.get('/', (req, res) => {
-	Wishlist.findAll({order: 'title'})
+	Wishlist.findAll({limit: 5})
 	.then(function(result){
-		fiveBooksArray = []
-		for (var i = 0; i < 5; i++) {
-			fiveBooksArray.push(result[i].dataValues)
-		}
 		const wishHomepage = {
-			fiveBooks: fiveBooksArray, 
+			fiveBooks: result, 
 			user: req.session.user
 		}
 		res.render('index', wishHomepage);
@@ -93,71 +89,42 @@ app.get('/books', (req, res) => {
 //post books '/books' page (after searching)
 app.post('/books', (req, res) => {
 	const searching = req.body.search;
+	const findLanguage = req.body.language;
+	const findGenre = req.body.genre;
+	const allGenres = req.body.allGenres;
 	OwnedBooks.findAll({order: 'authorLastName'})
 	.then(function(result){
 		var booksWeSeek = []
 		for (var i = 0; i < result.length; i++) {
-			if (result[i].authorfirstname !== null && result[i].authorfirstname.includes(searching)) {
-				booksWeSeek.push({
-					authorfirstname: result[i].dataValues.authorfirstname,
-					authorlastname: result[i].dataValues.authorlastname,
-					title: result[i].dataValues.title,
-					genre: result[i].dataValues.genre,
-					language: result[i].dataValues.language,
-					lastread: result[i].dataValues.lastread
-				})
-			} else if (result[i].authorlastname !== null && result[i].authorlastname.includes(searching)) {
-				booksWeSeek.push({
-					authorfirstname: result[i].dataValues.authorfirstname,
-					authorlastname: result[i].dataValues.authorlastname,
-					title: result[i].dataValues.title,
-					genre: result[i].dataValues.genre,
-					language: result[i].dataValues.language,
-					lastread: result[i].dataValues.lastread
-				})
-			} else if (result[i].title !== null && result[i].title.includes(searching)) {
-				booksWeSeek.push({
-					authorfirstname: result[i].dataValues.authorfirstname,
-					authorlastname: result[i].dataValues.authorlastname,
-					title: result[i].dataValues.title,
-					genre: result[i].dataValues.genre,
-					language: result[i].dataValues.language,
-					lastread: result[i].dataValues.lastread
-				})
-			} else if (result[i].genre !== null && result[i].genre.includes(searching)) {
-				booksWeSeek.push({
-					authorfirstname: result[i].dataValues.authorfirstname,
-					authorlastname: result[i].dataValues.authorlastname,
-					title: result[i].dataValues.title,
-					genre: result[i].dataValues.genre,
-					language: result[i].dataValues.language,
-					lastread: result[i].dataValues.lastread
-				})
-			} else if (result[i].language !== null && result[i].language.includes(searching)) {
-				booksWeSeek.push({
-					authorfirstname: result[i].dataValues.authorfirstname,
-					authorlastname: result[i].dataValues.authorlastname,
-					title: result[i].dataValues.title,
-					genre: result[i].dataValues.genre,
-					language: result[i].dataValues.language,
-					lastread: result[i].dataValues.lastread
-				})
-			} else if (result[i].lastread !== null && result[i].lastread.includes(searching)) {
-				booksWeSeek.push({
-					authorfirstname: result[i].dataValues.authorfirstname,
-					authorlastname: result[i].dataValues.authorlastname,
-					title: result[i].dataValues.title,
-					genre: result[i].dataValues.genre,
-					language: result[i].dataValues.language,
-					lastread: result[i].dataValues.lastread
-				})
+			var book = {
+				authorfirstname: result[i].dataValues.authorfirstname,
+				authorlastname: result[i].dataValues.authorlastname,
+				title: result[i].dataValues.title,
+				genre: result[i].dataValues.genre,
+				language: result[i].dataValues.language,
+				lastread: result[i].dataValues.lastread
+			}
+			var bookDoesExist = result[i].authorfirstname !== null && result[i].authorfirstname.includes(searching) ||
+				result[i].authorlastname !== null && result[i].authorlastname.includes(searching)   ||
+				result[i].title !== null && result[i].title.includes(searching)						||
+				result[i].lastread !== null && result[i].lastread.includes(searching);
+			if (findLanguage.includes(result[i].language)) {
+				if (allGenres === "all") {
+					if (bookDoesExist) {
+						booksWeSeek.push(book)
+					} 
+				} else if (findGenre.includes(result[i].genre) || result[i].genre !== null && result[i].genre.includes(findGenre)){
+					if (bookDoesExist) {
+						booksWeSeek.push(book)
+					} 
+				}
 			}
 		}
 		const SeekingBooks = {
 			allBooks: booksWeSeek, 
 			user: req.session.user
 		}
-		res.render('books', SeekingBooks);
+		res.send(SeekingBooks);
 	})
 })
 
@@ -229,6 +196,33 @@ app.post('/addbooks', (req, res) => {
 	})
 	.then(function(){
 		res.redirect('/books')
+	})
+})
+
+app.get('/book/:bookId', (req, res)=>{
+	console.log('console.logging bookId')
+	console.log(req.params.bookId)
+	OwnedBooks.findOne({
+		where: {id: req.params.bookId}
+	})
+	.then(function(book){
+		console.log('inside the .then')
+		console.log(book)
+		//here it goes back to the top of the get request and fill in js.cookie and jquery file as req.params.bookId
+		res.render('change', {result:book, user:req.session.user})
+	})
+})
+
+app.get('/wishlist_to_books/:bookId', (req, res)=>{
+	console.log('console.logging bookId')
+	console.log(req.params.bookId)
+	Wishlist.findOne({
+		where: {id: req.params.bookId}
+	})
+	.then(function(book){
+		console.log('inside the .then')
+		console.log(book)
+		res.render('transfer', {result:book, user:req.session.user})
 	})
 })
 
