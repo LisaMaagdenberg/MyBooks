@@ -43,50 +43,50 @@ html
 					|  English
 					br
 					p Genres:
-					input(type='radio', name='allGenres', value='all' checked) 
+					input#allGenresAll(type='radio', name='allGenres', value='all' checked) 
 					|  All
 					br
-					input(type='radio', name='allGenres', value='no')
+					input#allGenresNo(type='radio', name='allGenres', value='no')
 					|  Select by genre:
 					br
 					div#searchOptions
-						input(type="radio", name="genre", value="null")
+						input.radioInput(type="radio", name="genre", value="null")
 						|  Not specified
 						br
-						input(type='radio', name='genre', value='fantasy')
+						input.radioInput(type='radio', name='genre', value='fantasy')
 						|  Fantasy
 						br
-						input(type='radio', name='genre', value='thriller')
+						input.radioInput(type='radio', name='genre', value='thriller')
 						|  Thriller
 						br
-						input(type='radio', name='genre', value='romance')
+						input.radioInput(type='radio', name='genre', value='romance')
 						|  Romance
 						br
-						input(type='radio', name='genre', value='chicklit')
+						input.radioInput(type='radio', name='genre', value='chicklit')
 						|  Chicklit
 						br
-						input(type='radio', name='genre', value='children\'s')
+						input.radioInput(type='radio', name='genre', value='children\'s')
 						|  Children's
 						br
-						input(type='radio', name='genre', value='religion')
+						input.radioInput(type='radio', name='genre', value='religion')
 						|  Religion
 						br
-						input(type='radio', name='genre', value='Judaïsm')
+						input.radioInput(type='radio', name='genre', value='Judaïsm')
 						|  Judaïsm
 						br
-						input(type='radio', name='genre', value='YA')
+						input.radioInput(type='radio', name='genre', value='YA')
 						|  Young Adult
 						br
-						input(type='radio', name='genre', value='novel')
+						input.radioInput(type='radio', name='genre', value='novel')
 						|  Novel
 						br
-						input(type='radio', name='genre', value='real life')
+						input.radioInput(type='radio', name='genre', value='real life')
 						|  Real life
 						br
-						input(type='radio', name='genre', value='war')
+						input.radioInput(type='radio', name='genre', value='war')
 						|  War
 						br
-						input(type='radio', name='genre', value='detective')
+						input.radioInput(type='radio', name='genre', value='detective')
 						|  Detective
 					br
 					br
@@ -95,6 +95,13 @@ html
 
 		include ../static/pug/footer.pug
 		script.
+			$(".radioInput").click(function(){
+				$('#allGenresAll').prop('checked',false)
+				$('#allGenresNo').prop('checked',true)
+			})
+			$('#allGenresAll').click(function(){
+				$('.radioInput').prop('checked', false)
+			})
 			$(".button").click(function(event){
 				event.preventDefault()
 				var thisLanguage = ""
