@@ -15,15 +15,15 @@ html
 					input(type="password" name="password")
 					br
 					input(type="submit" value="Log in" class="input-button")
-			//- #login-right
-			//- 	h1 Sign up
-			//- 	form(action="/signup" method="post")
-			//- 		p Username:
-			//- 		input(type="text" name="usernameSignup") 
-			//- 		p E-mail adress:
-			//- 		input(type="text" name="emailSignup")
-			//- 		p Password:
-			//- 		input(type="password" name="passwordSignup") 
-			//- 		br
-			//- 		input(type="submit" value="Sign up!" class="input-button")
+			#login-right
+				h1 Sign up
+				form(action="/signup" method="post")
+					p Username:
+					input(type="text" name="usernameSignup") 
+					p E-mail adress:
+					input(type="text" name="emailSignup")
+					p Password:
+					input(type="password" name="passwordSignup") 
+					br
+					input(type="submit" value="Sign up!" class="input-button")
 		include ../static/pug/footer.pug
