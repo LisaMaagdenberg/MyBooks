@@ -261,7 +261,7 @@ app.get('/logout', (req, res) => {
 })
 
 //server
-sequelize.sync({force:true})
+sequelize.sync()
 	.then(function(){
 		app.listen(process.env.PORT || 8000, () => {
 			console.log('server has started at port ' + process.env.PORT || 8000);
