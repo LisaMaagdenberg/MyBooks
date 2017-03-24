@@ -18,8 +18,11 @@ html
 					each book in allBooks
 						tr.initialResult
 							td #{book.authorlastname}, #{book.authorfirstname}
-							td 
-								a(href="/book/"+book.id) #{book.title}
+							if user
+								td 
+									a(href="/book/"+book.id) #{book.title}
+							else
+								td #{book.title}
 							td #{book.genre}
 							td #{book.language}
 							td #{book.lastread}
