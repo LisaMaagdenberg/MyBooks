@@ -173,16 +173,16 @@ app.post('/login', (req, res) => {
 	})
 })
 
-app.post('/signup', (req, res) => {
-	Users.create({
-		username: req.body.usernameSignup,
-		email: req.body.emailSignup,
-		password: req.body.passwordSignup
-	})
-	.then(function(){
-		res.redirect('/')
-	})
-})
+// app.post('/signup', (req, res) => {
+// 	Users.create({
+// 		username: req.body.usernameSignup,
+// 		email: req.body.emailSignup,
+// 		password: req.body.passwordSignup
+// 	})
+// 	.then(function(){
+// 		res.redirect('/')
+// 	})
+// })
 
 app.get('/addbooks', (req, res) => {
 	var activeUser = req.session.user;
