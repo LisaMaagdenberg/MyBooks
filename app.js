@@ -131,7 +131,7 @@ app.post('/books', (req, res) => {
 
 //get wishlist '/wishlist' page
 app.get('/wishlist', (req, res) => {
-	Wishlist.findAll({order: 'title'})
+	Wishlist.findAll({order: 'authorlastname'})
 	.then(function(result){
 		const theWholeWishlist = {
 			wishingThis: result, 
