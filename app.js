@@ -38,7 +38,8 @@ var Wishlist = sequelize.define('wishlist', {
 	authorfirstname: Sequelize.STRING,
 	authorlastname: Sequelize.STRING,
 	language: Sequelize.STRING,
-	price: Sequelize.STRING
+	price: Sequelize.STRING,
+	reserved: Sequelize.BOOLEAN
 })
 
 //set table users
@@ -225,6 +226,40 @@ app.get('/book/:bookId', (req, res)=>{
 	})
 })
 
+app.post('/change', (req, res)=>{
+	OwnedBooks.findOne({where:{authorlastname: req.body.authorlastname, title: req.body.title}})
+	.then(function(book){
+		book.update({
+			authorfirstname: req.body.authorfirstname,
+			authorlastname: req.body.authorlastname,
+			title: req.body.title,
+			genre: req.body.genre,
+			language: req.body.language,
+			lastread: req.body.lastread
+		})
+		.then(function(){
+			res.redirect('/books')
+		})
+	})
+})
+
+app.post('/transfer', (req, res)=>{
+	Wishlist.destroy({where:{authorlastname: req.body.authorlastname, title: req.body.title}})
+	.then(function(){
+		OwnedBooks.create({
+			authorfirstname: req.body.authorfirstname,
+			authorlastname: req.body.authorlastname,
+			title: req.body.title,
+			genre: req.body.genre,
+			language: req.body.language,
+			lastread: req.body.lastread
+		})
+		.then(function(){
+			res.redirect('/wishlist')
+		})
+	})
+})
+
 app.get('/wishlist_to_books/:bookId', (req, res)=>{
 	console.log('console.logging bookId')
 	console.log(req.params.bookId)
@@ -258,6 +293,10 @@ app.get('/logout', (req, res) => {
 		}
 		res.redirect('/');
 	})
+})
+
+app.post('/reservation/:thisBook', (req, res)=>{
+	console.log()
 })
 
 //server

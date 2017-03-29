@@ -10,23 +10,23 @@ html
 			#add-page
 				#add-books
 					h1 Change something
-					form(action="/addbooks" method="post")
+					form(action="/transfer" method="post")
 						p Author:
 						label(for="firstname") First name
 						br
-						input#firstname(type="text" name="authorfirstname")
+						input#firstname(type="text" name="authorfirstname" value=result.authorfirstname)
 						br
 						label(for="lastname") Last name
 						br
-						input#lastname(type="text" name="authorlastname") 
+						input#lastname(type="text" name="authorlastname" value=result.authorlastname) 
 						p Title:
-						input(type="text" name="title")
+						input(type="text" name="title" value=result.title)
 						p Genre:
-						input(type="text" name="genre")
+						input(type="text" name="genre" value=result.genre)
 						p Language:
-						input(type="text" name="language")
+						input(type="text" name="language" value=result.language)
 						p Last read:
-						input(type="text" name="lastread")
+						input(type="text" name="lastread" value=result.lastread)
 						br
 						input(type="submit" value="Add" class="input-button")
 		include ../static/pug/footer.pug

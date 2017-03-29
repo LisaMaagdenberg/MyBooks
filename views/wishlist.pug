@@ -13,6 +13,7 @@ html
 					th Author
 					th Language
 					th Price
+					th I bought this book
 				each book in wishingThis
 					tr
 						if user
@@ -23,5 +24,10 @@ html
 						td #{book.authorfirstname} #{book.authorlastname}
 						td #{book.language}
 						td #{book.price}
-
+						td 
+							if book.reserved
+								input(type="checkbox" checked)
+							else 
+								form(method="post" action="/reservation/"+book.id)
+									input(class='checkedOrNot' type="checkbox")
 		include ../static/pug/footer.pug
