@@ -115,7 +115,7 @@ app.post('/books', (req, res) => {
 					if (bookDoesExist) {
 						booksWeSeek.push(book)
 					} 
-				} else if (findGenre.includes(result[i].genre) || result[i].genre !== null && result[i].genre.includes(findGenre)){
+				} else if (result[i].genre !== null && result[i].genre.includes(findGenre)){
 					if (bookDoesExist) {
 						booksWeSeek.push(book)
 					} 
