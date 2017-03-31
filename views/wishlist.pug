@@ -7,27 +7,36 @@ html
 		include ../static/pug/navbar.pug
 
 		div#wishlist-table
+			h1.center To claim a book, click the title!
 			table
 				tr
 					th Title
 					th Author
 					th Language
 					th Price
-					th I bought this book
+					th Still available?
 				each book in wishingThis
-					tr
-						if user
-							td
-								a(href="/wishlist_to_books/"+book.id) #{book.title}
-						else	
-							td #{book.title}
-						td #{book.authorfirstname} #{book.authorlastname}
-						td #{book.language}
-						td #{book.price}
-						td 
-							if book.reserved
-								input(type="checkbox" checked)
-							else 
-								form(method="post" action="/reservation/"+book.id)
-									input(class='checkedOrNot' type="checkbox")
+					if book.available
+						tr
+							if user
+								td
+									a(href="/wishlist_to_books/"+book.id) #{book.title}
+							else	
+								td 
+									a(href="/buy_book/"+book.id) #{book.title}
+							td #{book.authorfirstname} #{book.authorlastname}
+							td #{book.language}
+							td #{book.price}
+							td Yes
+					else
+						tr.crossed
+							if user
+								td
+									a(href="/wishlist_to_books/"+book.id) #{book.title}
+							else	
+								td #{book.title}
+							td #{book.authorfirstname} #{book.authorlastname}
+							td #{book.language}
+							td #{book.price}
+							td No
 		include ../static/pug/footer.pug

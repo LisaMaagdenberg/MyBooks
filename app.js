@@ -39,7 +39,7 @@ var Wishlist = sequelize.define('wishlist', {
 	authorlastname: Sequelize.STRING,
 	language: Sequelize.STRING,
 	price: Sequelize.STRING,
-	reserved: Sequelize.BOOLEAN
+	available: Sequelize.BOOLEAN
 })
 
 //set table users
@@ -270,6 +270,33 @@ app.get('/wishlist_to_books/:bookId', (req, res)=>{
 		console.log('inside the .then')
 		console.log(book)
 		res.render('transfer', {result:book, user:req.session.user})
+	})
+})
+
+app.get('/buy_book/:bookId', (req, res)=>{
+	console.log('logging bookId')
+	console.log(req.params.bookId)
+	Wishlist.findOne({
+		where: {id: req.params.bookId}
+	})
+	.then(function(book){
+		res.render('buybook', {result:book, user:req.session.user})
+	})
+})
+
+app.post('/buy_this_book/:bookId', (req, res)=>{
+	console.log(req.params.bookId)
+	Wishlist.findOne({
+		where: {id: req.params.bookId}
+	})
+	.then(function(book){
+		console.log('I found a book!')
+		book.update({
+			available: false
+		})
+	})
+	.then(function(){
+		res.redirect('/wishlist')
 	})
 })
 

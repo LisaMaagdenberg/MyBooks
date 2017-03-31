@@ -1,0 +1,23 @@
+html
+	head
+		title Lisa's Books -- Transfer books from wishlist to owned books
+		include ../static/pug/head-tags.pug
+
+	body
+		include ../static/pug/header.pug
+		include ../static/pug/navbar.pug
+		#add-page
+			#add-books
+				h1 #{result.title}
+				h3 By #{result.authorfirstname} #{result.authorlastname}
+				form(action="/buy_this_book/"+result.id method="post")
+					p Are you buying this book?
+					br
+					input.newTab(type="submit" value="Yes" class="input-button")
+					button.input-button
+						a(href="/wishlist") No
+		include ../static/pug/footer.pug
+	script.
+		$('.newTab').click(function(){
+			window.open("https://www.bol.com")
+		})
