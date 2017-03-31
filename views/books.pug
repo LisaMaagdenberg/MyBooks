@@ -139,7 +139,7 @@ html
 						console.log(res.allBooks[0].id)
 						$("table").append("<tr class='initialResult'>" +
 							"<td>" + res.allBooks[i].authorlastname+", "+res.allBooks[i].authorfirstname+"</td>" +
-							"<td><a href='/book/"+res.allBooks[i].id+"'>" + res.allBooks[i].title+"</a></td>" +
+							"<td>" + res.allBooks[i].title+"</td>" +
 							"<td>" + res.allBooks[i].genre+"</td>" +
 							"<td>" + res.allBooks[i].language+"</td>" +
 							"<td>" + res.allBooks[i].lastread+"</td></tr>")
