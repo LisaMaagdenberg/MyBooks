@@ -89,11 +89,12 @@ html
 						input.radioInput(type='radio', name='genre', value='detective')
 						|  Detective
 						br
-						input.radioInput(type='radio' name='genre' value='nonfiction')
+						input.radioInput(type='radio', name='genre', value='nonfiction')
 						|  Non-fiction
 						br
-						input.radioInput(type='radio' name='genre' value='biology')
+						input.radioInput(type='radio', name='genre', value='biology')
 						|  Biology
+						br
 					br
 					br
 					input(class="button" type="submit" value="Go")
@@ -122,7 +123,7 @@ html
 					thisAllGenre = document.getElementsByName('allGenres')[0].value
 				} else {
 					thisAllGenre = document.getElementsByName('allGenres')[1].value
-					for (var i = 0; i <= 12; i++) {
+					for (var i = 0; i <= 14; i++) {
 						if (document.getElementsByName('genre')[i].checked) {
 							thisGenre = document.getElementsByName('genre')[i].value
 						}
