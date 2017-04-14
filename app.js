@@ -306,7 +306,8 @@ app.post('/wishlist', (req, res) => {
 		authorfirstname: req.body.authorfirstnamewish,
 		authorlastname: req.body.authorlastnamewish,
 		language: req.body.languagewish,
-		price: req.body.pricewish
+		price: req.body.pricewish,
+		available: true
 	})
 	.then(function(){
 		res.redirect('/wishlist')
